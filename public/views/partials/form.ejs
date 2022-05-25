@@ -1,0 +1,15 @@
+<h1>Agregar Productos</h1>
+<!-- hace el envio que hacemos en insomnia o Postman en el body -->
+<form id="form" action="/productos" method="post" enctype="multipart/form-data">
+	<!-- accion es que se vaya hacia la ruta productos con el metodo post  -->
+	title:
+	<input id="title" type="text" name="title" />
+	price:
+	<input id="price" type="number" name="price" />
+	image:
+	<input id="thumbnail" type="file" name="thumbnail" />
+	<button type="submit">Agregar</button>
+</form>
+<aside>
+	<p id="message"> </p>
+</aside>

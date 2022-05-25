@@ -1,0 +1,26 @@
+<h1 style="color: red">Productos</h1>
+<% if(allProducts.length>0){ %>
+	<table class="table">
+		<tr style="color: black">
+			<th>title</th>
+			<th>price</th>
+			<th>thumbnail</th>
+		</tr>
+		<% allProducts.forEach(producto=>{ %>
+			<tr>
+				<td>
+					<%=producto.title %>
+				</td>
+				<td>
+					<%=producto.price %>
+				</td>
+				<td>
+					<img style="height: auto; width: 30%" src=<%=producto.thumbnail%>
+					alt="sskks" />
+				</td>
+			</tr>
+			<%})%>
+	</table>
+	<%}else{ %>
+		<h2 style="color: violet">No se encontraron datos</h2>
+		<%} %>
