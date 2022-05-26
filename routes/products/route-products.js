@@ -1,11 +1,7 @@
 const { Router } = require("express");
 const router = Router();
-const Products = require("../../container.js");
+const products = require("../../container.js");
 const multer = require("multer");
-
-//instancio la clase con la base de datos y sus metodos
-const product = new Products();
-console.log(__dirname);
 
 // Multer - subir archivos
 const storage = multer.diskStorage({
@@ -21,7 +17,7 @@ router.use(multer({ storage }).single("thumbnail")); // 'thumbnail' es el nombre
 //middlewares
 const existProduct = async function (req, res, next) {
 	//controla si eciste el producto por su id
-	const allProducts = await product.getAll();
+	const allProducts = await products.getAll();
 	for (el of allProducts) {
 		if (el.id === Number(req.params.id)) {
 			return next();
@@ -57,7 +53,7 @@ router.post("/", async (req, res) => {
 		const { title, price } = req.body;
 		const image = req.file;
 		const obj = { title, price, thumbnail: `../../files/${image.filename}` };
-		await product.add(obj);
+		await products.add(obj);
 		// return res.render("index",{ Agregado: productAdd });
 		return res.redirect("/productos");
 	} catch (error) {
@@ -68,7 +64,7 @@ router.post("/", async (req, res) => {
 //devuelve todos los productos
 router.get("/list", async (req, res) => {
 	try {
-		let allProducts = await product.getAll();
+		let allProducts = await products.getAll();
 		return res.render("list", { allProducts });
 	} catch (error) {
 		console.log(error);
@@ -79,7 +75,7 @@ router.get("/list", async (req, res) => {
 router.get("/:id", existProduct, noProductError, async (req, res) => {
 	try {
 		const { id } = req.params;
-		let productId = await product.getById(id);
+		let productId = await products.getById(id);
 		return res.json({ Producto: productId });
 	} catch (error) {
 		console.log(error);
@@ -97,7 +93,7 @@ router.put("/:id", existProduct, noProductError, async (req, res) => {
 			thumbnail,
 			id: Number(id),
 		};
-		let productUpload = await product.update(obj);
+		let productUpload = await products.update(obj);
 		res.json({ productUpload });
 	} catch (error) {
 		console.log(error);
@@ -108,11 +104,13 @@ router.put("/:id", existProduct, noProductError, async (req, res) => {
 router.delete("/:id", existProduct, noProductError, async (req, res) => {
 	try {
 		const { id } = req.params;
-		let productDelete = await product.deleteById(Number(id));
+		let productDelete = await products.deleteById(Number(id));
 		return res.json({ productDelete });
 	} catch (error) {
 		console.log(error);
 	}
 });
+
+
 
 module.exports = router;

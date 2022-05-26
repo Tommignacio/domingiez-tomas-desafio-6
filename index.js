@@ -1,10 +1,15 @@
 const express = require("express");
 const app = express();
+const http = require("http");
+const { Server: ioServer } = require("socket.io");
 const morgan = require("morgan");
 const routes = require("./routes/index-routes.js");
 
-const { Server: ioServer } = require("socket.io");
-const http = require("http"); //modulo http
+
+//clase con metdodos para los productos
+const products = require("./container.js");
+
+//creo servidores
 const httpServer = http.createServer(app); //creo servidor http
 const io = new ioServer(httpServer); //creo servidor io Websocket
 
@@ -15,12 +20,21 @@ app.use(express.static(__dirname + "/public")); //dirname sirve para que si abro
 app.use(express.urlencoded({ extended: true })); //sirve para leer los datos enviados por html formulario
 
 //config plantilla
-
 app.set("views", "public/views"); //nombre de la carpeta, ruta donde esta
 app.set("view engine", "ejs");
 
 //Rutas
 app.use("/", routes);
+
+//servidor socket
+io.on("connection", (socket) => {
+	console.log("servidor conectado")
+	console.log(socket.id)
+	socket.emit("products", products.getAll())
+
+})
+
+
 
 //empezando servidor
 const PORT = 8080;
@@ -31,4 +45,3 @@ server.on("error", () => {
 	console.log(`error en el puerto ${PORT}`);
 });
 
-exports.module = io

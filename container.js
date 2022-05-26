@@ -87,4 +87,7 @@ class Container {
 		}
 	}
 }
-module.exports = Container;
+//instancio la clase
+const products = new Container();
+
+module.exports = products;

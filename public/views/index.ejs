@@ -6,6 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Productos</title>
+
 </head>
 <header>
 	<%- include("./partials/header")%>
@@ -13,7 +14,20 @@
 
 <body>
 	<%- include("./partials/form") %>
-		<script src="../scripts.js"></script>
+		<table>
+			<tr>
+				<th>title</th>
+				<th>price</th>
+				<th>thumbnail</th>
+			</tr>
+			<tr id="tableProducts">
+			</tr>
+		</table>
+		<p id="pEmpty"></p>
+		<script src="/socket.io/socket.io.js" defer></script>
+		<script src="../main.js"></script>
+
+
 </body>
 
 </html>
