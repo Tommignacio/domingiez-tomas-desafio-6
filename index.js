@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
-const http = require("http");
 const { Server: ioServer } = require("socket.io");
+const http = require("http");
 const morgan = require("morgan");
 const routes = require("./routes/index-routes.js");
 
 
 //clase con metdodos para los productos
-const products = require("./container.js");
+// const products = require("./container.js");
 
 //creo servidores
 const httpServer = http.createServer(app); //creo servidor http
@@ -26,11 +26,18 @@ app.set("view engine", "ejs");
 //Rutas
 app.use("/", routes);
 
-//servidor socket
+//array de mensajes
+const messages = []
+
+//servidor socket para chat
 io.on("connection", (socket) => {
 	console.log("servidor conectado")
 	console.log(socket.id)
-	socket.emit("products", products.getAll())
+	socket.on("newMessage", (objMessage) => {
+		console.log(objMessage)
+		messages.push(objMessage)
+	})
+	socket.emit("messages", messages)
 
 })
 

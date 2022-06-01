@@ -40,7 +40,8 @@ const noProductError = async function (err, req, res, next) {
 //pagina index
 router.get("/", async (req, res) => {
 	try {
-		return res.render("index", { allProducts: 0 });
+		let allProducts = await products.getAll();
+		return res.render("index", { allProducts });
 	} catch (error) {
 		console.log(error);
 	}
@@ -72,44 +73,29 @@ router.get("/list", async (req, res) => {
 });
 
 //devuelve producto por ID
-router.get("/:id", existProduct, noProductError, async (req, res) => {
-	try {
-		const { id } = req.params;
-		let productId = await products.getById(id);
-		return res.json({ Producto: productId });
-	} catch (error) {
-		console.log(error);
-	}
-});
+// router.get("/:id", existProduct, noProductError, async (req, res) => {
+// 	try {
+// 		const { id } = req.params;
+// 		let productId = await products.getById(id);
+// 		return res.json({ Producto: productId });
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// });
 
 //actualiza producto(reemplaza)
-router.put("/:id", existProduct, noProductError, async (req, res) => {
-	try {
-		const { id } = req.params;
-		const { title, price, thumbnail } = req.body;
-		const obj = {
-			title,
-			price,
-			thumbnail,
-			id: Number(id),
-		};
-		let productUpload = await products.update(obj);
-		res.json({ productUpload });
-	} catch (error) {
-		console.log(error);
-	}
-});
+// c
 
 //elimina producto
-router.delete("/:id", existProduct, noProductError, async (req, res) => {
-	try {
-		const { id } = req.params;
-		let productDelete = await products.deleteById(Number(id));
-		return res.json({ productDelete });
-	} catch (error) {
-		console.log(error);
-	}
-});
+// router.delete("/:id", existProduct, noProductError, async (req, res) => {
+// 	try {
+// 		const { id } = req.params;
+// 		let productDelete = await products.deleteById(Number(id));
+// 		return res.json({ productDelete });
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// });
 
 
 

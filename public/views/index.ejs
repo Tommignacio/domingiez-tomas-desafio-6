@@ -2,32 +2,21 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Productos</title>
-
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
 </head>
-<header>
-	<%- include("./partials/header")%>
-</header>
 
 <body>
+	<header>
+		<%- include("./partials/header")%>
+	</header>
 	<%- include("./partials/form") %>
-		<table>
-			<tr>
-				<th>title</th>
-				<th>price</th>
-				<th>thumbnail</th>
-			</tr>
-			<tr id="tableProducts">
-			</tr>
-		</table>
-		<p id="pEmpty"></p>
-		<script src="/socket.io/socket.io.js" defer></script>
-		<script src="../main.js"></script>
-
-
+		<%-include( "./partials/list-products" )%>
+			<%-include( "./partials/chat" )%>
+				<script src="/socket.io/socket.io.js"></script>
+				<script src="../main.js"></script>
 </body>
 
 </html>
